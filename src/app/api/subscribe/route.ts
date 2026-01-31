@@ -6,17 +6,14 @@ export async function POST(request: NextRequest) {
     const { email } = await request.json();
 
     if (!email || typeof email !== "string") {
-      return NextResponse.json(
-        { error: "Email is required" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Email is required" }, { status: 400 });
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return NextResponse.json(
         { error: "Invalid email format" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -28,14 +25,11 @@ export async function POST(request: NextRequest) {
     } else {
       return NextResponse.json(
         { error: result.error || "Failed to subscribe" },
-        { status: 500 }
+        { status: 500 },
       );
     }
   } catch (error) {
     console.error("Subscribe error:", error);
-    return NextResponse.json(
-      { error: "An error occurred" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "An error occurred" }, { status: 500 });
   }
 }

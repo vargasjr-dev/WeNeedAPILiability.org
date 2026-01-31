@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# WeNeedAPILiability.org
 
-## Getting Started
+An advocacy website promoting human accountability for autonomous systems. This project proposes that every automated action with real-world effects should be legally attributable to a specific human individual.
 
-First, run the development server:
+## About
+
+As AI agents and autonomous systems increasingly act on our behalf, determining who is responsible when things go wrong has become genuinely difficult. Current legal frameworks were designed for a world where humans made decisions and machines executed them. That assumption no longer holds.
+
+This website advocates for a simple principle: the chain of accountability should never break. For every action an AI system takes, there should be a human who stands behind it.
+
+## Tech Stack
+
+- Next.js 16 with App Router
+- TypeScript
+- Tailwind CSS
+- Neon PostgreSQL (serverless)
+- Deployed on Vercel
+
+## Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env.local` file with:
 
-## Learn More
+```
+DATABASE_URL=your_neon_database_url
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Contributing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This is an open advocacy project. Contributions are welcome, particularly from legal scholars, technologists building autonomous systems, and policymakers who understand the legislative process.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT

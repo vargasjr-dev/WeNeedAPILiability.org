@@ -1,0 +1,36 @@
+name: Database Migrations
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Pull Vercel Environment Variables
+        run: vercel env pull .env.local --yes --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: team_36iZPJkU2LLMsHZqJZXMZppe
+          VERCEL_PROJECT_ID: prj_gJSXoUFIaOFtlLECCVMJ9pNTcpnL
+
+      - name: Run Database Migrations
+        run: |
+          export $(cat .env.local | xargs)
+          npx tsx scripts/migrations.ts
