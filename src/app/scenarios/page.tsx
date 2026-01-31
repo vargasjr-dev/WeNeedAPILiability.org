@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { getScenarios, initializeDatabase } from "@/lib/db";
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 
 export interface ScenarioData {
   title: string;
@@ -90,35 +92,7 @@ export default async function ScenariosPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <nav className="border-b border-gray-200">
-        <div className="max-w-4xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="text-lg font-semibold text-gray-900">
-              API Liability
-            </Link>
-            <div className="flex gap-6 text-sm">
-              <Link
-                href="/proposal"
-                className="text-gray-600 hover:text-gray-900"
-              >
-                Proposal
-              </Link>
-              <Link href="/scenarios" className="text-gray-900 font-medium">
-                Scenarios
-              </Link>
-              <Link
-                href="/roadmap"
-                className="text-gray-600 hover:text-gray-900"
-              >
-                Roadmap
-              </Link>
-              <Link href="/news" className="text-gray-600 hover:text-gray-900">
-                News
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Nav currentPage="scenarios" />
 
       <main className="max-w-4xl mx-auto px-6 py-16">
         <header className="mb-12">
@@ -167,27 +141,7 @@ export default async function ScenariosPage() {
         </div>
       </main>
 
-      <footer className="border-t border-gray-200 mt-16">
-        <div className="max-w-4xl mx-auto px-6 py-8">
-          <p className="text-sm text-gray-500 mb-2">
-            This is an advocacy project, not legal advice. The content on this
-            site represents policy proposals and educational material, not
-            professional legal counsel.
-          </p>
-          <p className="text-sm text-gray-500">
-            Maintained by{" "}
-            <a
-              href="https://twitter.com/dvargas92495"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-700 hover:text-gray-900 underline"
-            >
-              David Vargas Fuertes
-            </a>
-            .
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

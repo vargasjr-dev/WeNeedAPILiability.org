@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 
 function EmailSubscribeForm() {
   const [email, setEmail] = useState("");
@@ -78,41 +79,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-800/95 backdrop-blur-sm border-b border-slate-700">
-        <div className="max-w-6xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="text-lg font-semibold text-white">
-              API Liability
-            </Link>
-            <div className="flex gap-6 text-sm">
-              <Link
-                href="/proposal"
-                className="text-slate-300 hover:text-white transition-colors"
-              >
-                Proposal
-              </Link>
-              <Link
-                href="/scenarios"
-                className="text-slate-300 hover:text-white transition-colors"
-              >
-                Scenarios
-              </Link>
-              <Link
-                href="/roadmap"
-                className="text-slate-300 hover:text-white transition-colors"
-              >
-                Roadmap
-              </Link>
-              <Link
-                href="/news"
-                className="text-slate-300 hover:text-white transition-colors"
-              >
-                News
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Nav currentPage="home" variant="dark" />
 
       <section className="relative min-h-screen bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 flex items-center overflow-hidden">
         <div className="absolute inset-0 opacity-10">
@@ -282,34 +249,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="border-t border-gray-200 mt-16">
-        <div className="max-w-4xl mx-auto px-6 py-8">
-          <p className="text-sm text-gray-500 mb-2">
-            This is an advocacy project, not legal advice. The content on this
-            site represents policy proposals and educational material, not
-            professional legal counsel.
-          </p>
-          <p className="text-sm text-gray-500">
-            Maintained by{" "}
-            <a
-              href="https://twitter.com/dvargas92495"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-700 hover:text-gray-900 underline"
-            >
-              David Vargas Fuertes
-            </a>
-            . Questions or feedback:{" "}
-            <Link
-              href="/contact"
-              className="text-gray-700 hover:text-gray-900 underline"
-            >
-              Contact us
-            </Link>
-            .
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

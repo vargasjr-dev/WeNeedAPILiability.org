@@ -4,7 +4,7 @@ An advocacy website promoting human accountability for autonomous systems. This 
 
 ## About
 
-As AI agents and autonomous systems increasingly act on our behalf—booking flights, executing trades, managing infrastructure—determining who is responsible when things go wrong has become genuinely difficult. Current legal frameworks were designed for a world where humans made decisions and machines executed them. That assumption no longer holds.
+As AI agents and autonomous systems increasingly act on our behalf, determining who is responsible when things go wrong has become genuinely difficult. Current legal frameworks were designed for a world where humans made decisions and machines executed them. That assumption no longer holds.
 
 This website advocates for a simple principle: the chain of accountability should never break. For every action an AI system takes, there should be a human who stands behind it.
 
