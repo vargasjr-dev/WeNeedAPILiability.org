@@ -18,9 +18,7 @@ export default function Nav({ currentPage, variant = "light" }: NavProps) {
 
   const linkClasses = (page: NavProps["currentPage"]) => {
     if (currentPage === page) {
-      return isDark
-        ? "text-white font-medium"
-        : "text-gray-900 font-medium";
+      return isDark ? "text-white font-medium" : "text-gray-900 font-medium";
     }
     return isDark
       ? "text-slate-300 hover:text-white transition-colors"
@@ -29,7 +27,9 @@ export default function Nav({ currentPage, variant = "light" }: NavProps) {
 
   return (
     <nav className={baseClasses}>
-      <div className={`${isDark ? "max-w-6xl" : "max-w-4xl"} mx-auto px-6 py-4`}>
+      <div
+        className={`${isDark ? "max-w-6xl" : "max-w-4xl"} mx-auto px-6 py-4`}
+      >
         <div className="flex items-center justify-between">
           <Link href="/" className={logoClasses}>
             API Liability
