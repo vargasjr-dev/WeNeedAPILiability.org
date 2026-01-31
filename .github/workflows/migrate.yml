@@ -1,0 +1,96 @@
+name: Database Migrations
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Pull Vercel Environment Variables
+        run: vercel env pull .env.local --yes --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Run Database Migrations
+        run: |
+          # Load environment variables
+          export $(cat .env.local | xargs)
+          
+          # Run migrations using a simple Node script
+          node -e "
+            const { neon } = require('@neondatabase/serverless');
+            
+            async function migrate() {
+              const sql = neon(process.env.DATABASE_URL);
+              
+              // Create email_subscribers table
+              await sql\`
+                CREATE TABLE IF NOT EXISTS email_subscribers (
+                  id SERIAL PRIMARY KEY,
+                  email VARCHAR(255) UNIQUE NOT NULL,
+                  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+                )
+              \`;
+              
+              // Create contact_submissions table
+              await sql\`
+                CREATE TABLE IF NOT EXISTS contact_submissions (
+                  id SERIAL PRIMARY KEY,
+                  email VARCHAR(255) NOT NULL,
+                  body TEXT NOT NULL,
+                  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+                )
+              \`;
+              
+              // Create news_items table
+              await sql\`
+                CREATE TABLE IF NOT EXISTS news_items (
+                  id SERIAL PRIMARY KEY,
+                  date DATE NOT NULL,
+                  title VARCHAR(500) NOT NULL,
+                  summary TEXT NOT NULL,
+                  type VARCHAR(50) NOT NULL DEFAULT 'update',
+                  url VARCHAR(500),
+                  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+                )
+              \`;
+              
+              // Create scenarios table
+              await sql\`
+                CREATE TABLE IF NOT EXISTS scenarios (
+                  id SERIAL PRIMARY KEY,
+                  title VARCHAR(500) NOT NULL,
+                  description TEXT NOT NULL,
+                  today TEXT NOT NULL,
+                  breakdown TEXT NOT NULL,
+                  solution TEXT NOT NULL,
+                  slug VARCHAR(255) UNIQUE NOT NULL,
+                  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+                )
+              \`;
+              
+              console.log('Migrations completed successfully');
+            }
+            
+            migrate().catch(console.error);
+          "

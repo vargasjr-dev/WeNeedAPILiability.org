@@ -16,6 +16,9 @@ export default function ProposalPage() {
               <Link href="/scenarios" className="text-gray-600 hover:text-gray-900">
                 Scenarios
               </Link>
+              <Link href="/roadmap" className="text-gray-600 hover:text-gray-900">
+                Roadmap
+              </Link>
               <Link href="/news" className="text-gray-600 hover:text-gray-900">
                 News
               </Link>
@@ -99,7 +102,16 @@ export default function ProposalPage() {
             This is an advocacy project, not legal advice. The content on this site represents policy proposals and educational material, not professional legal counsel.
           </p>
           <p className="text-sm text-gray-500">
-            Maintained by David Vargas. Questions or feedback: contact via the email list.
+            Maintained by{" "}
+            <a 
+              href="https://twitter.com/dvargas92495" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-700 hover:text-gray-900 underline"
+            >
+              David Vargas Fuertes
+            </a>
+            .
           </p>
         </div>
       </footer>

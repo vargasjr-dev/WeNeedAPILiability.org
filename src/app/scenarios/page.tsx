@@ -1,42 +1,19 @@
 import Link from "next/link";
+import { getScenarios, initializeDatabase } from "@/lib/db";
 
-interface ScenarioProps {
+export interface ScenarioData {
   title: string;
   description: string;
   today: string;
   breakdown: string;
   solution: string;
+  slug: string;
 }
 
-function Scenario({ title, description, today, breakdown, solution }: ScenarioProps) {
-  return (
-    <section className="mb-16 pb-16 border-b border-gray-200 last:border-b-0">
-      <h2 className="text-2xl font-semibold text-gray-900 mb-3">{title}</h2>
-      <p className="text-gray-600 mb-6">{description}</p>
-      
-      <div className="space-y-6">
-        <div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">What happens today</h3>
-          <p className="text-gray-700 leading-relaxed">{today}</p>
-        </div>
-        
-        <div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">Where accountability breaks down</h3>
-          <p className="text-gray-700 leading-relaxed">{breakdown}</p>
-        </div>
-        
-        <div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">How human-mapped liability would change incentives</h3>
-          <p className="text-gray-700 leading-relaxed">{solution}</p>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-const scenarios: ScenarioProps[] = [
+const hardcodedScenarios: ScenarioData[] = [
   {
     title: "Autonomous Customer Support Agent",
+    slug: "customer-support-agent",
     description: "An AI agent handles customer service requests, including issuing refunds, applying credits, and modifying account settings.",
     today: "Companies deploy AI agents that can autonomously decide to issue refunds, sometimes worth thousands of dollars, without human review. These agents make judgment calls about customer complaints, apply company policies, and execute financial transactions. When the agent makes a mistake—issuing an inappropriate refund, denying a legitimate claim, or mishandling sensitive customer data—the company often points to the AI system as if it were an independent actor.",
     breakdown: "The customer has no clear recourse. The company claims the AI made an autonomous decision. The AI vendor disclaims liability in their terms of service. The developer who trained the model is several steps removed. Meanwhile, the customer is left dealing with the consequences of a decision that no human reviewed or approved. The diffusion of responsibility means no one feels accountable for fixing the problem or preventing it from recurring.",
@@ -44,6 +21,7 @@ const scenarios: ScenarioProps[] = [
   },
   {
     title: "Trading and Procurement Agents",
+    slug: "trading-procurement-agents",
     description: "AI systems execute financial trades or make purchasing decisions on behalf of organizations, often operating at speeds and scales that preclude human oversight of individual transactions.",
     today: "Algorithmic trading systems and AI procurement agents make thousands of decisions per second. They analyze market conditions, evaluate suppliers, negotiate terms, and execute transactions. When these systems cause harm—whether through market manipulation, unfair pricing practices, or simply poor decisions that cost money—the trail of responsibility becomes murky. The firm claims the algorithm acted autonomously. The algorithm's designers say they cannot predict every market condition. Regulators struggle to assign blame.",
     breakdown: "Financial markets depend on accountability. When a human trader manipulates the market, they face personal consequences. When an algorithm does the same thing, the consequences are diffused across the organization. This creates a moral hazard: firms can deploy aggressive trading strategies through AI systems while maintaining plausible deniability about the outcomes. The same dynamic applies to procurement, where AI agents might engage in practices that would be clearly unethical if done by a human buyer.",
@@ -51,6 +29,7 @@ const scenarios: ScenarioProps[] = [
   },
   {
     title: "Infrastructure Management Agents",
+    slug: "infrastructure-management-agents",
     description: "AI systems manage cloud infrastructure, network configurations, and operational technology, making decisions that affect system availability, security, and performance.",
     today: "Enterprise AI agents increasingly manage critical infrastructure. They scale computing resources, adjust network configurations, deploy software updates, and respond to security incidents. These systems operate with significant autonomy because the speed and complexity of modern infrastructure often exceeds human capacity to manage directly. When an AI agent makes a mistake—taking down a production system, creating a security vulnerability, or causing a data breach—the consequences can be severe and widespread.",
     breakdown: "Infrastructure failures often trigger a blame game. The operations team says the AI made an autonomous decision. The AI vendor says the system was configured incorrectly. The security team says they were not consulted. Meanwhile, customers experience outages, data is compromised, and no one takes clear responsibility for preventing the next incident. The complexity of these systems makes it easy for everyone to point fingers elsewhere.",
@@ -58,6 +37,7 @@ const scenarios: ScenarioProps[] = [
   },
   {
     title: "Multi-Agent Coordination Systems",
+    slug: "multi-agent-coordination-systems",
     description: "Multiple AI agents work together to accomplish complex tasks, with each agent making decisions that affect the others and the overall outcome.",
     today: "Modern AI deployments increasingly involve multiple agents coordinating with each other. One agent might gather information, another might analyze it, a third might make recommendations, and a fourth might execute actions. These systems can accomplish sophisticated tasks, but they also create complex webs of causation. When something goes wrong, it may be genuinely unclear which agent's decision was the proximate cause of the harm.",
     breakdown: "Multi-agent systems represent the most challenging case for accountability. Each agent's developer can claim their component worked correctly. The system integrator can claim they followed best practices. The deploying organization can claim they had no visibility into the agents' internal coordination. The result is that harmful outcomes emerge from the interaction of multiple systems, with no clear party responsible for the emergent behavior.",
@@ -65,7 +45,31 @@ const scenarios: ScenarioProps[] = [
   }
 ];
 
-export default function ScenariosPage() {
+async function getAllScenarios(): Promise<ScenarioData[]> {
+  try {
+    await initializeDatabase();
+    const dbScenarios = await getScenarios();
+    const dbScenarioSlugs = new Set(dbScenarios.map((s) => s.slug as string));
+    const filteredHardcoded = hardcodedScenarios.filter(s => !dbScenarioSlugs.has(s.slug));
+    return [
+      ...filteredHardcoded,
+      ...dbScenarios.map((s) => ({
+        title: s.title as string,
+        description: s.description as string,
+        today: s.today as string,
+        breakdown: s.breakdown as string,
+        solution: s.solution as string,
+        slug: s.slug as string
+      }))
+    ];
+  } catch {
+    return hardcodedScenarios;
+  }
+}
+
+export default async function ScenariosPage() {
+  const scenarios = await getAllScenarios();
+
   return (
     <div className="min-h-screen bg-white">
       <nav className="border-b border-gray-200">
@@ -81,6 +85,9 @@ export default function ScenariosPage() {
               <Link href="/scenarios" className="text-gray-900 font-medium">
                 Scenarios
               </Link>
+              <Link href="/roadmap" className="text-gray-600 hover:text-gray-900">
+                Roadmap
+              </Link>
               <Link href="/news" className="text-gray-600 hover:text-gray-900">
                 News
               </Link>
@@ -90,28 +97,37 @@ export default function ScenariosPage() {
       </nav>
 
       <main className="max-w-4xl mx-auto px-6 py-16">
-        <header className="mb-16">
+        <header className="mb-12">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">
             Real-World Scenarios
           </h1>
           <p className="text-gray-600 leading-relaxed">
-            Understanding how accountability breaks down in practice helps clarify why human-mapped liability matters. The following scenarios illustrate common situations where autonomous systems act with real-world consequences, and how clear liability rules would change the incentives for everyone involved.
+            Understanding how accountability breaks down in practice helps clarify why human-mapped liability matters. Click on any scenario below to learn more about how clear liability rules would change the incentives for everyone involved.
           </p>
         </header>
 
-        {scenarios.map((scenario, index) => (
-          <Scenario key={index} {...scenario} />
-        ))}
-
-        <section className="bg-gray-50 p-8 rounded-lg">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">The Common Thread</h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Across all these scenarios, the fundamental problem is the same: autonomous systems take actions with real consequences, but no specific human bears clear responsibility for those actions. This creates perverse incentives. Organizations can deploy powerful AI systems while maintaining distance from their outcomes. Individuals harmed by these systems have no clear path to accountability.
-          </p>
-          <p className="text-gray-700 leading-relaxed">
-            Human-mapped liability does not prevent organizations from using AI or require humans to approve every automated decision. It simply ensures that the chain of responsibility never breaks—that for every action an AI system takes, there is a human who stands behind it.
-          </p>
-        </section>
+        <div className="grid gap-6 md:grid-cols-2">
+          {scenarios.map((scenario) => (
+            <Link
+              key={scenario.slug}
+              href={`/scenarios/${scenario.slug}`}
+              className="group block border border-gray-200 rounded-lg p-6 transition-all duration-200 hover:border-slate-400 hover:shadow-lg hover:-translate-y-1"
+            >
+              <h2 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-slate-700 transition-colors">
+                {scenario.title}
+              </h2>
+              <p className="text-gray-600 leading-relaxed line-clamp-3">
+                {scenario.description}
+              </p>
+              <div className="mt-4 flex items-center text-slate-600 group-hover:text-slate-800 transition-colors">
+                <span className="text-sm font-medium">Read more</span>
+                <svg className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </Link>
+          ))}
+        </div>
       </main>
 
       <footer className="border-t border-gray-200 mt-16">
@@ -120,10 +136,21 @@ export default function ScenariosPage() {
             This is an advocacy project, not legal advice. The content on this site represents policy proposals and educational material, not professional legal counsel.
           </p>
           <p className="text-sm text-gray-500">
-            Maintained by David Vargas. Questions or feedback: contact via the email list.
+            Maintained by{" "}
+            <a 
+              href="https://twitter.com/dvargas92495" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-700 hover:text-gray-900 underline"
+            >
+              David Vargas Fuertes
+            </a>
+            .
           </p>
         </div>
       </footer>
     </div>
   );
 }
+
+export { hardcodedScenarios };
