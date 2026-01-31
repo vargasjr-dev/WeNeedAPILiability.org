@@ -6,7 +6,9 @@ import Link from "next/link";
 export default function ContactPage() {
   const [email, setEmail] = useState("");
   const [body, setBody] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -47,13 +49,22 @@ export default function ContactPage() {
               API Liability
             </Link>
             <div className="flex gap-6 text-sm">
-              <Link href="/proposal" className="text-gray-600 hover:text-gray-900">
+              <Link
+                href="/proposal"
+                className="text-gray-600 hover:text-gray-900"
+              >
                 Proposal
               </Link>
-              <Link href="/scenarios" className="text-gray-600 hover:text-gray-900">
+              <Link
+                href="/scenarios"
+                className="text-gray-600 hover:text-gray-900"
+              >
                 Scenarios
               </Link>
-              <Link href="/roadmap" className="text-gray-600 hover:text-gray-900">
+              <Link
+                href="/roadmap"
+                className="text-gray-600 hover:text-gray-900"
+              >
                 Roadmap
               </Link>
               <Link href="/news" className="text-gray-600 hover:text-gray-900">
@@ -66,18 +77,20 @@ export default function ContactPage() {
 
       <main className="max-w-4xl mx-auto px-6 py-16">
         <header className="mb-12">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">
-            Contact Us
-          </h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">Contact Us</h1>
           <p className="text-gray-600 leading-relaxed">
-            Have questions, feedback, or want to get involved? We would love to hear from you. Fill out the form below and we will get back to you as soon as possible.
+            Have questions, feedback, or want to get involved? We would love to
+            hear from you. Fill out the form below and we will get back to you
+            as soon as possible.
           </p>
         </header>
 
         <div className="max-w-xl">
           {status === "success" ? (
             <div className="bg-green-50 border border-green-200 rounded-lg p-6">
-              <h2 className="text-lg font-semibold text-green-800 mb-2">Message Sent</h2>
+              <h2 className="text-lg font-semibold text-green-800 mb-2">
+                Message Sent
+              </h2>
               <p className="text-green-700">{message}</p>
               <button
                 onClick={() => setStatus("idle")}
@@ -89,7 +102,10 @@ export default function ContactPage() {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Your Email
                 </label>
                 <input
@@ -105,7 +121,10 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <label htmlFor="body" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="body"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Your Message
                 </label>
                 <textarea
@@ -139,13 +158,15 @@ export default function ContactPage() {
       <footer className="border-t border-gray-200 mt-16">
         <div className="max-w-4xl mx-auto px-6 py-8">
           <p className="text-sm text-gray-500 mb-2">
-            This is an advocacy project, not legal advice. The content on this site represents policy proposals and educational material, not professional legal counsel.
+            This is an advocacy project, not legal advice. The content on this
+            site represents policy proposals and educational material, not
+            professional legal counsel.
           </p>
           <p className="text-sm text-gray-500">
             Maintained by{" "}
-            <a 
-              href="https://twitter.com/dvargas92495" 
-              target="_blank" 
+            <a
+              href="https://twitter.com/dvargas92495"
+              target="_blank"
               rel="noopener noreferrer"
               className="text-gray-700 hover:text-gray-900 underline"
             >

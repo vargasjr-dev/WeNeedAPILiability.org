@@ -146,13 +146,16 @@ export async function createScenario(scenario: {
   }
 }
 
-export async function updateScenario(slug: string, scenario: {
-  title: string;
-  description: string;
-  today: string;
-  breakdown: string;
-  solution: string;
-}) {
+export async function updateScenario(
+  slug: string,
+  scenario: {
+    title: string;
+    description: string;
+    today: string;
+    breakdown: string;
+    solution: string;
+  },
+) {
   const sql = getDb();
   try {
     await sql`

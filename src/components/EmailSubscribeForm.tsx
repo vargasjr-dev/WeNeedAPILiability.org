@@ -4,7 +4,9 @@ import { useState } from "react";
 
 export default function EmailSubscribeForm() {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -56,7 +58,9 @@ export default function EmailSubscribeForm() {
         </button>
       </form>
       {message && (
-        <p className={`mt-3 text-sm ${status === "success" ? "text-green-700" : "text-red-700"}`}>
+        <p
+          className={`mt-3 text-sm ${status === "success" ? "text-green-700" : "text-red-700"}`}
+        >
           {message}
         </p>
       )}

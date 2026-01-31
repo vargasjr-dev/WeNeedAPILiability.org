@@ -1,5 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createScenario, updateScenario, deleteScenario, getScenarios, initializeDatabase } from "@/lib/db";
+import {
+  createScenario,
+  updateScenario,
+  deleteScenario,
+  getScenarios,
+  initializeDatabase,
+} from "@/lib/db";
 
 function verifyAdminPassword(request: NextRequest): boolean {
   const authHeader = request.headers.get("authorization");
@@ -25,7 +31,10 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ scenarios });
   } catch (error) {
     console.error("Error fetching scenarios:", error);
-    return NextResponse.json({ error: "Failed to fetch scenarios" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch scenarios" },
+      { status: 500 },
+    );
   }
 }
 
@@ -39,11 +48,21 @@ export async function POST(request: NextRequest) {
     const { title, description, today, breakdown, solution, slug } = body;
 
     if (!title || !description || !today || !breakdown || !solution || !slug) {
-      return NextResponse.json({ error: "All fields are required" }, { status: 400 });
+      return NextResponse.json(
+        { error: "All fields are required" },
+        { status: 400 },
+      );
     }
 
     await initializeDatabase();
-    const result = await createScenario({ title, description, today, breakdown, solution, slug });
+    const result = await createScenario({
+      title,
+      description,
+      today,
+      breakdown,
+      solution,
+      slug,
+    });
 
     if (result.success) {
       return NextResponse.json({ message: "Scenario created successfully" });
@@ -52,7 +71,10 @@ export async function POST(request: NextRequest) {
     }
   } catch (error) {
     console.error("Error creating scenario:", error);
-    return NextResponse.json({ error: "Failed to create scenario" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to create scenario" },
+      { status: 500 },
+    );
   }
 }
 
@@ -66,11 +88,20 @@ export async function PUT(request: NextRequest) {
     const { slug, title, description, today, breakdown, solution } = body;
 
     if (!slug || !title || !description || !today || !breakdown || !solution) {
-      return NextResponse.json({ error: "All fields are required" }, { status: 400 });
+      return NextResponse.json(
+        { error: "All fields are required" },
+        { status: 400 },
+      );
     }
 
     await initializeDatabase();
-    const result = await updateScenario(slug, { title, description, today, breakdown, solution });
+    const result = await updateScenario(slug, {
+      title,
+      description,
+      today,
+      breakdown,
+      solution,
+    });
 
     if (result.success) {
       return NextResponse.json({ message: "Scenario updated successfully" });
@@ -79,7 +110,10 @@ export async function PUT(request: NextRequest) {
     }
   } catch (error) {
     console.error("Error updating scenario:", error);
-    return NextResponse.json({ error: "Failed to update scenario" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to update scenario" },
+      { status: 500 },
+    );
   }
 }
 
@@ -106,6 +140,9 @@ export async function DELETE(request: NextRequest) {
     }
   } catch (error) {
     console.error("Error deleting scenario:", error);
-    return NextResponse.json({ error: "Failed to delete scenario" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to delete scenario" },
+      { status: 500 },
+    );
   }
 }

@@ -26,9 +26,11 @@ export default function AdminPage() {
     today: "",
     breakdown: "",
     solution: "",
-    slug: ""
+    slug: "",
   });
-  const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "success" | "error">("idle");
+  const [saveStatus, setSaveStatus] = useState<
+    "idle" | "saving" | "success" | "error"
+  >("idle");
   const [saveMessage, setSaveMessage] = useState("");
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -39,8 +41,8 @@ export default function AdminPage() {
     try {
       const response = await fetch("/api/admin/scenarios", {
         headers: {
-          "Authorization": `Bearer ${password}`
-        }
+          Authorization: `Bearer ${password}`,
+        },
       });
 
       if (response.ok) {
@@ -61,8 +63,8 @@ export default function AdminPage() {
     try {
       const response = await fetch("/api/admin/scenarios", {
         headers: {
-          "Authorization": `Bearer ${password}`
-        }
+          Authorization: `Bearer ${password}`,
+        },
       });
       if (response.ok) {
         const data = await response.json();
@@ -87,7 +89,7 @@ export default function AdminPage() {
       today: "",
       breakdown: "",
       solution: "",
-      slug: ""
+      slug: "",
     });
     setIsCreating(true);
   };
@@ -101,7 +103,7 @@ export default function AdminPage() {
       today: "",
       breakdown: "",
       solution: "",
-      slug: ""
+      slug: "",
     });
   };
 
@@ -116,16 +118,20 @@ export default function AdminPage() {
         method,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${password}`
+          Authorization: `Bearer ${password}`,
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
 
       const data = await response.json();
 
       if (response.ok) {
         setSaveStatus("success");
-        setSaveMessage(isCreating ? "Scenario created successfully" : "Scenario updated successfully");
+        setSaveMessage(
+          isCreating
+            ? "Scenario created successfully"
+            : "Scenario updated successfully",
+        );
         await fetchScenarios();
         setTimeout(() => {
           handleCancel();
@@ -147,12 +153,15 @@ export default function AdminPage() {
     }
 
     try {
-      const response = await fetch(`/api/admin/scenarios?slug=${encodeURIComponent(slug)}`, {
-        method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${password}`
-        }
-      });
+      const response = await fetch(
+        `/api/admin/scenarios?slug=${encodeURIComponent(slug)}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${password}`,
+          },
+        },
+      );
 
       if (response.ok) {
         await fetchScenarios();
@@ -173,7 +182,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (isCreating && formData.title && !formData.slug) {
-      setFormData(prev => ({ ...prev, slug: generateSlug(prev.title) }));
+      setFormData((prev) => ({ ...prev, slug: generateSlug(prev.title) }));
     }
   }, [formData.title, isCreating, formData.slug]);
 
@@ -184,7 +193,10 @@ export default function AdminPage() {
           <h1 className="text-2xl font-bold text-gray-900 mb-6">Admin Login</h1>
           <form onSubmit={handleLogin}>
             <div className="mb-4">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
                 Admin Password
               </label>
               <input
@@ -209,7 +221,9 @@ export default function AdminPage() {
             </button>
           </form>
           <p className="mt-4 text-sm text-gray-500 text-center">
-            <Link href="/" className="text-gray-700 hover:underline">Back to home</Link>
+            <Link href="/" className="text-gray-700 hover:underline">
+              Back to home
+            </Link>
           </p>
         </div>
       </div>
@@ -232,38 +246,55 @@ export default function AdminPage() {
             </button>
           </div>
 
-          <form onSubmit={handleSave} className="bg-white p-6 rounded-lg shadow-md space-y-6">
+          <form
+            onSubmit={handleSave}
+            className="bg-white p-6 rounded-lg shadow-md space-y-6"
+          >
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Title
+              </label>
               <input
                 type="text"
                 value={formData.title}
-                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, title: e.target.value })
+                }
                 className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Slug (URL path)</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Slug (URL path)
+              </label>
               <input
                 type="text"
                 value={formData.slug}
-                onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, slug: e.target.value })
+                }
                 className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
                 required
                 disabled={!isCreating}
               />
               {!isCreating && (
-                <p className="text-sm text-gray-500 mt-1">Slug cannot be changed after creation</p>
+                <p className="text-sm text-gray-500 mt-1">
+                  Slug cannot be changed after creation
+                </p>
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Description
+              </label>
               <textarea
                 value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, description: e.target.value })
+                }
                 className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
                 rows={3}
                 required
@@ -271,10 +302,14 @@ export default function AdminPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">What happens today</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                What happens today
+              </label>
               <textarea
                 value={formData.today}
-                onChange={(e) => setFormData({ ...formData, today: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, today: e.target.value })
+                }
                 className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
                 rows={5}
                 required
@@ -282,10 +317,14 @@ export default function AdminPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Where accountability breaks down</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Where accountability breaks down
+              </label>
               <textarea
                 value={formData.breakdown}
-                onChange={(e) => setFormData({ ...formData, breakdown: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, breakdown: e.target.value })
+                }
                 className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
                 rows={5}
                 required
@@ -293,10 +332,14 @@ export default function AdminPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">How human-mapped liability would change incentives</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                How human-mapped liability would change incentives
+              </label>
               <textarea
                 value={formData.solution}
-                onChange={(e) => setFormData({ ...formData, solution: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, solution: e.target.value })
+                }
                 className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
                 rows={5}
                 required
@@ -304,7 +347,9 @@ export default function AdminPage() {
             </div>
 
             {saveMessage && (
-              <p className={`text-sm ${saveStatus === "success" ? "text-green-600" : "text-red-600"}`}>
+              <p
+                className={`text-sm ${saveStatus === "success" ? "text-green-600" : "text-red-600"}`}
+              >
                 {saveMessage}
               </p>
             )}
@@ -315,7 +360,11 @@ export default function AdminPage() {
                 disabled={saveStatus === "saving"}
                 className="px-6 py-3 bg-gray-900 text-white rounded-md hover:bg-gray-800 disabled:opacity-50"
               >
-                {saveStatus === "saving" ? "Saving..." : isCreating ? "Create Scenario" : "Save Changes"}
+                {saveStatus === "saving"
+                  ? "Saving..."
+                  : isCreating
+                    ? "Create Scenario"
+                    : "Save Changes"}
               </button>
               <button
                 type="button"
@@ -335,7 +384,9 @@ export default function AdminPage() {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">Admin: Manage Scenarios</h1>
+          <h1 className="text-2xl font-bold text-gray-900">
+            Admin: Manage Scenarios
+          </h1>
           <div className="flex gap-4">
             <Link href="/" className="text-gray-600 hover:text-gray-900">
               Back to site
@@ -364,19 +415,27 @@ export default function AdminPage() {
         <div className="bg-white rounded-lg shadow-md">
           <div className="p-4 border-b border-gray-200">
             <h2 className="font-semibold text-gray-900">Database Scenarios</h2>
-            <p className="text-sm text-gray-500">These scenarios are stored in the database and can be edited.</p>
+            <p className="text-sm text-gray-500">
+              These scenarios are stored in the database and can be edited.
+            </p>
           </div>
-          
+
           {scenarios.length === 0 ? (
             <div className="p-8 text-center text-gray-500">
-              No scenarios in database yet. Create one or they will be loaded from the hardcoded defaults.
+              No scenarios in database yet. Create one or they will be loaded
+              from the hardcoded defaults.
             </div>
           ) : (
             <div className="divide-y divide-gray-200">
               {scenarios.map((scenario) => (
-                <div key={scenario.slug} className="p-4 flex items-center justify-between">
+                <div
+                  key={scenario.slug}
+                  className="p-4 flex items-center justify-between"
+                >
                   <div>
-                    <h3 className="font-medium text-gray-900">{scenario.title}</h3>
+                    <h3 className="font-medium text-gray-900">
+                      {scenario.title}
+                    </h3>
                     <p className="text-sm text-gray-500">/{scenario.slug}</p>
                   </div>
                   <div className="flex gap-2">
@@ -400,9 +459,13 @@ export default function AdminPage() {
         </div>
 
         <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-          <h3 className="font-medium text-blue-900 mb-2">Note about hardcoded scenarios</h3>
+          <h3 className="font-medium text-blue-900 mb-2">
+            Note about hardcoded scenarios
+          </h3>
           <p className="text-sm text-blue-800">
-            There are 4 hardcoded scenarios that will always appear on the site. If you create a scenario in the database with the same slug as a hardcoded one, the database version will take precedence.
+            There are 4 hardcoded scenarios that will always appear on the site.
+            If you create a scenario in the database with the same slug as a
+            hardcoded one, the database version will take precedence.
           </p>
         </div>
       </div>
