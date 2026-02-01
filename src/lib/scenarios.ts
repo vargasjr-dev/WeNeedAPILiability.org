@@ -52,7 +52,9 @@ function parseFrontmatter(content: string): {
 }
 
 function extractSection(body: string, heading: string): string {
-  const headingRegex = new RegExp(`## ${heading}\\n\\n([\\s\\S]*?)(?=\\n## |$)`);
+  const headingRegex = new RegExp(
+    `## ${heading}\\n\\n([\\s\\S]*?)(?=\\n## |$)`,
+  );
   const match = body.match(headingRegex);
   return match ? match[1].trim() : "";
 }
@@ -82,7 +84,10 @@ export function getScenarioBySlug(slug: string): ScenarioData | null {
     slug: frontmatter.slug,
     today: extractSection(body, "What happens today"),
     breakdown: extractSection(body, "Where accountability breaks down"),
-    solution: extractSection(body, "How human-mapped liability would change incentives"),
+    solution: extractSection(
+      body,
+      "How human-mapped liability would change incentives",
+    ),
   };
 }
 

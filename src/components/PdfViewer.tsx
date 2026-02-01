@@ -9,12 +9,27 @@ interface PdfViewerProps {
 function parseMarkdown(markdown: string): string {
   let html = markdown;
 
-  html = html.replace(/^# (.+)$/gm, '<h1 class="text-2xl font-bold mb-4 mt-6">$1</h1>');
-  html = html.replace(/^## (.+)$/gm, '<h2 class="text-xl font-semibold mb-3 mt-5">$1</h2>');
-  html = html.replace(/^### (.+)$/gm, '<h3 class="text-lg font-semibold mb-2 mt-4">$1</h3>');
+  html = html.replace(
+    /^# (.+)$/gm,
+    '<h1 class="text-2xl font-bold mb-4 mt-6">$1</h1>',
+  );
+  html = html.replace(
+    /^## (.+)$/gm,
+    '<h2 class="text-xl font-semibold mb-3 mt-5">$1</h2>',
+  );
+  html = html.replace(
+    /^### (.+)$/gm,
+    '<h3 class="text-lg font-semibold mb-2 mt-4">$1</h3>',
+  );
 
-  html = html.replace(/^\d+\.\s+(.+)$/gm, '<li class="ml-6 mb-2 list-decimal">$1</li>');
-  html = html.replace(/^   ([a-z])\.\s+(.+)$/gm, '<li class="ml-10 mb-1 list-[lower-alpha]">$2</li>');
+  html = html.replace(
+    /^\d+\.\s+(.+)$/gm,
+    '<li class="ml-6 mb-2 list-decimal">$1</li>',
+  );
+  html = html.replace(
+    /^   ([a-z])\.\s+(.+)$/gm,
+    '<li class="ml-10 mb-1 list-[lower-alpha]">$2</li>',
+  );
 
   html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
   html = html.replace(/\*(.+?)\*/g, "<em>$1</em>");
@@ -25,9 +40,13 @@ function parseMarkdown(markdown: string): string {
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    const isListItem = line.includes('<li class="ml-6') || line.includes('<li class="ml-10');
+    const isListItem =
+      line.includes('<li class="ml-6') || line.includes('<li class="ml-10');
     const nextLine = lines[i + 1];
-    const nextIsListItem = nextLine && (nextLine.includes('<li class="ml-6') || nextLine.includes('<li class="ml-10'));
+    const nextIsListItem =
+      nextLine &&
+      (nextLine.includes('<li class="ml-6') ||
+        nextLine.includes('<li class="ml-10'));
 
     if (isListItem && !inList) {
       processedLines.push('<ol class="mb-4">');
@@ -59,7 +78,10 @@ function parseMarkdown(markdown: string): string {
 
 const PAGE_HEIGHT = 800;
 
-function paginateHtml(htmlContent: string, measureContainer: HTMLDivElement): string[] {
+function paginateHtml(
+  htmlContent: string,
+  measureContainer: HTMLDivElement,
+): string[] {
   const tempDiv = document.createElement("div");
   tempDiv.innerHTML = htmlContent;
   tempDiv.style.width = "100%";
@@ -159,7 +181,11 @@ export default function PdfViewer({ content }: PdfViewerProps) {
 
   return (
     <div className="flex flex-col items-center">
-      <div ref={measureRef} className="absolute invisible" style={{ width: "612px" }} />
+      <div
+        ref={measureRef}
+        className="absolute invisible"
+        style={{ width: "612px" }}
+      />
 
       <div className="bg-gray-100 rounded-lg p-4 mb-4 w-full max-w-3xl">
         <div className="flex items-center justify-between">
