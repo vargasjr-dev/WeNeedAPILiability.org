@@ -96,15 +96,16 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-                Every Automated Action Should Have a Human Accountable.
+                Every Automated Action Needs an Accountable Human.
               </h1>
               <p className="text-xl text-slate-300 leading-relaxed mb-4">
                 As autonomous systems increasingly act on our behalf, we need
-                clear rules about who is responsible when things go wrong.
+                clear rules about who is responsible, to incentivize against
+                harmful actions.
               </p>
               <p className="text-lg text-slate-400 leading-relaxed">
-                This proposal ensures that every API call with real-world
-                effects maps to a specific, liable human being.
+                This proposal ensures that every API call maps to a specific,
+                liable human being.
               </p>
             </div>
 
@@ -169,16 +170,25 @@ export default function Home() {
             The Problem
           </h2>
           <p className="text-gray-700 leading-relaxed mb-4">
-            Software systems are increasingly autonomous. AI agents book
-            flights, execute trades, issue refunds, and manage infrastructure
-            without direct human oversight. When these systems cause harm,
-            determining who is responsible has become genuinely difficult.
+            Software systems are increasingly capable of acting with meaningful
+            autonomy, operating beyond continuous human direction or
+            understanding. As autonomy increases, recent public experiments have
+            shown autonomous systems discussing private communication channels
+            and internal conventions that are intentionally not readily
+            interpretable by humans. While not initially dangerous, these
+            developments mark a clear shift toward software that can act in the
+            world without direct, ongoing human accountability, a strict
+            requirement for every AI risk takeoff scenario.
           </p>
           <p className="text-gray-700 leading-relaxed">
-            Current legal frameworks were designed for a world where humans made
-            decisions and machines executed them. That assumption no longer
-            holds. The result is a growing accountability gap: systems act,
-            consequences follow, but no one is clearly responsible.
+            Our legal and institutional frameworks were built on a simple
+            assumption: autonomy implies responsibility. When a system takes a
+            consequential action, there is a clearly identifiable human who can
+            be held accountable for it. That assumption is beginning to break
+            down. As responsibility becomes diffuse, incentives weaken for
+            ensuring these systems are aligned with human interests. At scale,
+            we can lose control of how these systems impact our health, safety,
+            and well-being.
           </p>
         </section>
 
@@ -187,54 +197,72 @@ export default function Home() {
             The Proposal
           </h2>
           <p className="text-gray-700 leading-relaxed mb-4">
-            We propose a simple principle: every automated action that has
-            real-world effects must be legally attributable to a specific human
-            individual. This does not mean humans must approve every action in
-            advance. It means that when an autonomous system acts, there must be
-            a designated person who bears responsibility for that action.
+            We propose a simple principle:{" "}
+            <span className="font-bold">
+              every automated action must be legally attributable to a specific
+              human individual.
+            </span>{" "}
+            This does not mean humans must approve every action in advance. It
+            means that when an autonomous system acts, there must be a clear
+            audit trail to the designated person who bears responsibility for
+            that action.
           </p>
           <p className="text-gray-700 leading-relaxed">
             This could be the developer who deployed the system, the operator
             who configured it, or the executive who authorized its use. The
-            specific allocation can vary by context. What matters is that the
-            chain of accountability never breaks.
+            specific allocation can vary by context, which our proposal and this
+            website will detail. What matters is that the chain of
+            accountability is never broken.
           </p>
         </section>
 
         <section className="mb-16">
           <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-            Why This Preserves Innovation
+            Why This Works
           </h2>
           <p className="text-gray-700 leading-relaxed mb-4">
-            This proposal does not slow down AI development or restrict what
-            autonomous systems can do. It simply ensures that the people who
-            benefit from deploying these systems also bear the risks. This is
-            how liability has always worked for other technologies.
+            Across history, the most reliable way societies have reduced
+            collective harm is by tying real-world actions to clear human
+            accountability. Laws governing finance, transportation, medicine,
+            and infrastructure all follow the same pattern: when someone can
+            cause meaningful impact, someone must also bear responsibility for
+            the outcome. This principle does not prevent progress. It defines
+            the rules of competition that allows organizations to scale.
           </p>
           <p className="text-gray-700 leading-relaxed">
-            Clear accountability rules actually help innovation by providing
-            legal certainty. Builders can deploy autonomous systems knowing
-            exactly what their obligations are. Users can trust these systems
-            knowing that someone stands behind them. Markets function better
-            when responsibility is clear.
+            Applying this principle to autonomous systems ensures that
+            responsibility does not disappear as software becomes more capable.
+            When accountability is explicit and personal, builders are
+            incentivized away from system designs that make alignment difficut.
+            That includes private agent-to-agent communication channels,
+            mechanisms that reduce interpretability, and weak audit trails.
+            Clear liability pushes the industry toward systems that remain
+            legible, attributable, and controllable as autonomy increases.
           </p>
         </section>
 
         <section className="mb-16">
           <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-            Who This Is For
+            Our Goal
           </h2>
           <p className="text-gray-700 leading-relaxed mb-4">
-            This proposal is relevant to policymakers drafting AI governance
-            frameworks, technologists building autonomous systems, and anyone
-            affected by automated decisions. It offers a practical framework
-            that works within existing legal traditions while addressing
-            genuinely new challenges.
+            We want to preserve accountability as AI systems become more capable
+            and more autonomous. This proposal does not limit innovation or slow
+            deployment. It reinforces a principle that has long enabled progress
+            at scale: when systems take consequential actions, a clearly
+            identifiable human must stand behind them. By maintaining this link
+            between autonomy and responsibility, we can continue advancing AI
+            while keeping its impacts aligned with human interests.
           </p>
           <p className="text-gray-700 leading-relaxed">
-            We are not anti-technology. We believe AI systems will continue to
-            become more capable and more autonomous. The question is not whether
-            to allow this, but how to ensure it happens responsibly.
+            This website exists to develop and communicate that principle in a
+            form usable by policymakers. It is a working space for articulating
+            the proposal, testing it against real-world scenarios, and tracking
+            how emerging regulatory developments affect the case for
+            human-mapped liability. The intent is to establish the foundation
+            for a comprehensive accountability framework: to actively shape the
+            policies, regulations, and tools required to ensure autonomous
+            systems remain under meaningful human control.
           </p>
         </section>
 
