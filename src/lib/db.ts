@@ -36,19 +36,6 @@ export async function initializeDatabase() {
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     )
   `;
-  await sql`
-    CREATE TABLE IF NOT EXISTS scenarios (
-      id SERIAL PRIMARY KEY,
-      title VARCHAR(500) NOT NULL,
-      description TEXT NOT NULL,
-      today TEXT NOT NULL,
-      breakdown TEXT NOT NULL,
-      solution TEXT NOT NULL,
-      slug VARCHAR(255) UNIQUE NOT NULL,
-      created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-      updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-    )
-  `;
 }
 
 export async function addEmailSubscriber(email: string) {
@@ -92,99 +79,5 @@ export async function getNewsItems() {
   } catch (error) {
     console.error("Error fetching news items:", error);
     return [];
-  }
-}
-
-export async function getScenarios() {
-  const sql = getDb();
-  try {
-    const scenarios = await sql`
-      SELECT id, title, description, today, breakdown, solution, slug
-      FROM scenarios
-      ORDER BY created_at ASC
-    `;
-    return scenarios;
-  } catch (error) {
-    console.error("Error fetching scenarios:", error);
-    return [];
-  }
-}
-
-export async function getScenarioBySlug(slug: string) {
-  const sql = getDb();
-  try {
-    const scenarios = await sql`
-      SELECT id, title, description, today, breakdown, solution, slug
-      FROM scenarios
-      WHERE slug = ${slug}
-    `;
-    return scenarios[0] || null;
-  } catch (error) {
-    console.error("Error fetching scenario:", error);
-    return null;
-  }
-}
-
-export async function createScenario(scenario: {
-  title: string;
-  description: string;
-  today: string;
-  breakdown: string;
-  solution: string;
-  slug: string;
-}) {
-  const sql = getDb();
-  try {
-    await sql`
-      INSERT INTO scenarios (title, description, today, breakdown, solution, slug)
-      VALUES (${scenario.title}, ${scenario.description}, ${scenario.today}, ${scenario.breakdown}, ${scenario.solution}, ${scenario.slug})
-    `;
-    return { success: true };
-  } catch (error) {
-    console.error("Error creating scenario:", error);
-    return { success: false, error: "Failed to create scenario" };
-  }
-}
-
-export async function updateScenario(
-  slug: string,
-  scenario: {
-    title: string;
-    description: string;
-    today: string;
-    breakdown: string;
-    solution: string;
-  },
-) {
-  const sql = getDb();
-  try {
-    await sql`
-      UPDATE scenarios
-      SET title = ${scenario.title},
-          description = ${scenario.description},
-          today = ${scenario.today},
-          breakdown = ${scenario.breakdown},
-          solution = ${scenario.solution},
-          updated_at = CURRENT_TIMESTAMP
-      WHERE slug = ${slug}
-    `;
-    return { success: true };
-  } catch (error) {
-    console.error("Error updating scenario:", error);
-    return { success: false, error: "Failed to update scenario" };
-  }
-}
-
-export async function deleteScenario(slug: string) {
-  const sql = getDb();
-  try {
-    await sql`
-      DELETE FROM scenarios
-      WHERE slug = ${slug}
-    `;
-    return { success: true };
-  } catch (error) {
-    console.error("Error deleting scenario:", error);
-    return { success: false, error: "Failed to delete scenario" };
   }
 }

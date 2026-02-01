@@ -1,35 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getScenarioBySlug, initializeDatabase } from "@/lib/db";
-import { hardcodedScenarios, ScenarioData } from "../page";
+import { getScenarioBySlug, getScenarioSlugs } from "@/lib/scenarios";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-
-async function getScenario(slug: string): Promise<ScenarioData | null> {
-  const hardcoded = hardcodedScenarios.find((s) => s.slug === slug);
-  if (hardcoded) {
-    return hardcoded;
-  }
-
-  try {
-    await initializeDatabase();
-    const dbScenario = await getScenarioBySlug(slug);
-    if (dbScenario) {
-      return {
-        title: dbScenario.title,
-        description: dbScenario.description,
-        today: dbScenario.today,
-        breakdown: dbScenario.breakdown,
-        solution: dbScenario.solution,
-        slug: dbScenario.slug,
-      };
-    }
-  } catch {
-    console.error("Error fetching scenario from DB");
-  }
-
-  return null;
-}
 
 export default async function ScenarioPage({
   params,
@@ -37,7 +10,7 @@ export default async function ScenarioPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const scenario = await getScenario(slug);
+  const scenario = getScenarioBySlug(slug);
 
   if (!scenario) {
     notFound();
@@ -131,7 +104,8 @@ export default async function ScenarioPage({
 }
 
 export async function generateStaticParams() {
-  return hardcodedScenarios.map((scenario) => ({
-    slug: scenario.slug,
+  const slugs = getScenarioSlugs();
+  return slugs.map((slug) => ({
+    slug,
   }));
 }
