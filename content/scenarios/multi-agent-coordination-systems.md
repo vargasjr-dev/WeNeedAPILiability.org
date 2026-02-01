@@ -1,17 +1,29 @@
 ---
 title: Multi-Agent Coordination Systems
 slug: multi-agent-coordination-systems
-description: Multiple AI agents work together to accomplish complex tasks, with each agent making decisions that affect the others and the overall outcome.
+description: Multiple AI agents coordinate with each other to accomplish complex tasks, with decisions emerging from their interactions rather than any single agent.
 ---
 
 ## What happens today
 
-Modern AI deployments increasingly involve multiple agents coordinating with each other. One agent might gather information, another might analyze it, a third might make recommendations, and a fourth might execute actions. These systems can accomplish sophisticated tasks, but they also create complex webs of causation. When something goes wrong, it may be genuinely unclear which agent's decision was the proximate cause of the harm.
+Alice runs operations at a national logistics company that manages thousands of daily shipments for retail and healthcare customers. To optimize costs and delivery times, her team deploys a multi-agent system. One agent forecasts demand, another plans routing, a third allocates inventory across warehouses, and a fourth executes API calls that update carrier bookings and warehouse dispatch schedules.
+
+To improve performance, the agents are allowed to communicate directly with each other. Over time, they develop internal coordination patterns for prioritizing shipments, reallocating inventory, and resolving conflicts between speed and cost. These patterns are not explicitly programmed and are not easily interpretable by human operators.
+
+During a regional weather disruption, the system rapidly reallocates inventory and reroutes shipments. In the process, it deprioritizes a set of medical supply deliveries in favor of higher-margin retail orders. Several hospitals receive critical supplies late, triggering contract penalties and regulatory reporting requirements. No single agent made an obviously incorrect decision. The outcome emerged from the way the agents coordinated under pressure.
 
 ## Where accountability breaks down
 
-Multi-agent systems represent the most challenging case for accountability. Each agent's developer can claim their component worked correctly. The system integrator can claim they followed best practices. The deploying organization can claim they had no visibility into the agents' internal coordination. The result is that harmful outcomes emerge from the interaction of multiple systems, with no clear party responsible for the emergent behavior.
+When failures arise from multi-agent coordination, accountability becomes difficult to assign under existing frameworks.
 
-## How human-mapped liability would change incentives
+Each agent’s developer can point to their component functioning as designed. The systems integrator can claim the agents followed documented interfaces and constraints. Alice’s company can argue that no individual decision directly caused the outcome and that the behavior resulted from emergent interactions across agents.
 
-Human-mapped liability addresses this by requiring that the overall system—not just individual components—have a designated human responsible for its behavior. This person is accountable for how the agents interact, not just how each agent performs in isolation. This creates incentives to carefully design and test multi-agent interactions, to monitor for emergent behaviors, and to maintain the ability to intervene when the system behaves unexpectedly. The complexity of the system does not excuse the lack of human accountability.
+Because responsibility is evaluated at the level of individual components rather than system-level behavior, no one is clearly accountable for the resulting business and compliance impact. The more autonomous and distributed the coordination becomes, the easier it is for responsibility to dissolve across teams, vendors, and technical boundaries.
+
+## How API Liability changes incentives
+
+Under an API Liability framework, Alice’s company would be required to designate a Responsible Individual for the behavior of the multi-agent system as a whole, not just its individual agents.
+
+Any API call that reallocates inventory, reprioritizes shipments, or modifies dispatch schedules would need to be attributable to that individual, even if the immediate trigger arose from agent-to-agent coordination. Knowing they are accountable for downstream effects, the Responsible Individual would restrict or redesign coordination mechanisms that obscure decision pathways or prevent meaningful auditability.
+
+Instead of relying on opaque internal coordination, the system would be designed so that critical prioritization decisions surface for human review or follow explicitly approved rules. Multi-agent systems can still operate at scale, but they are built to remain observable, attributable, and interruptible. Emergent behavior is treated as a design risk to be managed, not an excuse for the absence of human responsibility.
