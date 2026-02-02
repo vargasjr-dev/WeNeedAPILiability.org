@@ -69,7 +69,7 @@ export default async function ScenarioPage({
 
           <section>
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              How human-mapped liability would change incentives
+              How API Liability changes incentives
             </h2>
             <p className="text-gray-700 leading-relaxed">{scenario.solution}</p>
           </section>

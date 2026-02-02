@@ -86,7 +86,7 @@ export function getScenarioBySlug(slug: string): ScenarioData | null {
     breakdown: extractSection(body, "Where accountability breaks down"),
     solution: extractSection(
       body,
-      "How human-mapped liability would change incentives",
+      "How API Liability changes incentives",
     ),
   };
 }
