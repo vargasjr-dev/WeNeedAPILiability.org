@@ -59,10 +59,10 @@ function parseMarkdown(markdown: string): string {
       processedLines.push("</ol>");
       inList = false;
       if (line.trim()) {
-        processedLines.push(`<p class="mb-3 leading-relaxed">${line}</p>`);
+        processedLines.push(`<p class="leading-relaxed">${line}</p>`);
       }
     } else if (line.trim() && !line.startsWith("<h")) {
-      processedLines.push(`<p class="mb-3 leading-relaxed">${line}</p>`);
+      processedLines.push(`<p class="leading-relaxed">${line}</p>`);
     } else {
       processedLines.push(line);
     }

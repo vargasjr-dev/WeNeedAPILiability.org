@@ -13,7 +13,7 @@ This Act may be cited as the "API Liability Act of 2026".
 The purposes of this Act are to:
 
 1. Preserve a durable link between autonomous system behavior and human accountability.
-2. Ensure that automated actions with real world effects remain attributable to a clearly identified natural person.
+2. Ensure that automated actions remain attributable to a clearly identified natural person.
 3. Create economy wide incentives for safe, interpretable, and controllable system design.
 4. Reduce systemic risk arising from the diffusion of responsibility in the development and deployment of autonomous systems.
 
@@ -23,10 +23,10 @@ The purposes of this Act are to:
 
 Congress finds the following:
 
-1. Software systems increasingly initiate actions through application programming interfaces and similar mechanisms that may have financial, operational, informational, or physical effects without real time human direction.
+1. Software systems increasingly initiate actions through application programming interfaces and similar mechanisms that may have financial, operational, informational, or physical effects.
 2. Existing legal frameworks generally assume that a natural person makes a consequential decision and a machine executes it. That assumption is increasingly strained as software systems become more autonomous.
 3. When accountability for consequential actions is unclear or diffuse, incentives for oversight, restraint, transparency, and control are weakened, increasing the likelihood of harm at scale.
-4. Historically, society has reduced collective harm from powerful technologies by assigning clear responsibility to identifiable human actors, including in transportation, finance, medicine, and critical infrastructure.
+4. Historically, society has reduced collective harm from powerful technologies by assigning clear responsibility to identifiable human actors, including in transportation, finance, medicine, critical infrastructure, and firearms.
 5. It is in the public interest to ensure that autonomy in software does not become a mechanism for evading responsibility through organizational diffusion or technical design choices that undermine auditability.
 
 ### (b) Sense of Congress.
