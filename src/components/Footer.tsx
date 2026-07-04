@@ -28,6 +28,9 @@ export default function Footer() {
           </Link>
           .
         </p>
+        <p className="text-sm text-gray-500 mt-4">
+          © 2026 VargasJR LLC. All rights reserved.
+        </p>
       </div>
     </footer>
   );
